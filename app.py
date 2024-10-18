@@ -35,7 +35,7 @@ def google_search(search_keyword):
         'Content-Type': 'application/json'
     }
 
-    response = requests.request("POST", url, headers=headers, data=payload)
+    response = requests.request("POST", url, headers=headers, data=payload, timeout=60)
     print("RESPONSE:", response.text)
     return response.text
 
@@ -85,7 +85,7 @@ def web_scraping(objective: str, url: str):
     data_json = json.dumps(data)
 
     # Send the POST request
-    response = requests.post(f"https://chrome.browserless.io/content?token={brwoserless_api_key}", headers=headers, data=data_json)
+    response = requests.post(f"https://chrome.browserless.io/content?token={brwoserless_api_key}", headers=headers, data=data_json, timeout=60)
     
     # Check the response status code
     if response.status_code == 200:
@@ -109,7 +109,7 @@ def get_airtable_records(base_id, table_id):
         'Authorization': f'Bearer {airtable_api_key}',
     }
 
-    response = requests.request("GET", url, headers=headers)
+    response = requests.request("GET", url, headers=headers, timeout=60)
     data = response.json()
     print(data)
     return data
@@ -132,7 +132,7 @@ def update_single_airtable_record(base_id, table_id, id, fields):
         }]
     }
 
-    response = requests.patch(url, headers=headers, data=json.dumps(data))
+    response = requests.patch(url, headers=headers, data=json.dumps(data), timeout=60)
     data = response.json()
     return data
 
